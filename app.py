@@ -28,7 +28,7 @@ cnx = create_engine(postgres_str)
 df = pd.read_sql("SELECT * from trades", cnx.connect(), parse_dates=('Entry time',))
 
 
-df["YearMonth"] = df["Entry time"].apply(lambda x: x.strftime("%Y %m"))
+df["YearMonth"] = df["Entry time"].apply(lambda x: "{0}-{1}".format(x.year, x.month))
 
 
 def filter_exchange(exchange):
