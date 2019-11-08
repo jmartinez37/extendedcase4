@@ -310,8 +310,12 @@ def update_monthly(exchange, leverage, start_date, end_date):
     btc_returns = calc_btc_returns(dff)
     strat_returns = calc_strat_returns(dff)
     strat_vs_market = strat_returns - btc_returns
-    trace1 = go.Bar(x=dff["Entry time"], y=dff["Profit"], name="Profit")
-    trace2 = go.Bar(x=dff["Entry time"], y=dff["Trade type"], name="Trade type")
+    shortval = dff[dff["Trade type"] == "Short"]["Pnl (incl fees)"]
+    longval = dff[dff["Trade type"] == "Long"]["Pnl (incl fees)"]
+    shortbar = go.Bar(x=dff["Entry time"], y=shortval, name="Short")
+    longbar = go.Bar(x=dff["Entry time"], y=longval, name="Long")
+    trace1 = go.Scatter(x=dff["Entry time"], y=dff["BTC Price"], mode="lines")
+    trace2 = go.Scatter(x=dff["Entry time"], y=dff['Exit balance']+dff['Pnl (incl fees)'] , mode="lines")
     return (
         {
             "data": [
@@ -354,12 +358,14 @@ def update_table(exchange, leverage, start_date, end_date):
         dash.dependencies.Output("balance", "figure"),
     ],
     (
+        dash.dependencies.Input("exchange-select", "value"),
+        dash.dependencies.Input("leverage-select", "value"),
         dash.dependencies.Input("date-range-select", "start_date"),
         dash.dependencies.Input("date-range-select", "end_date"),
     ),
 )
 def update_daily_btc_portfolio_balance(start_date, end_date):
-    dfd = filter_date(start_date, end_date)
+    dfd = filter_df(exchange, leverage, start_date, end_date)
     trace_btc = go.Scatter(x=dfd["Entry time"], y=dfd["BTC Price"])
     trace_portfolio = go.Scatter(x=dfd["Entry time"], y=dfd["Profit"])
     return (
@@ -372,4 +378,4 @@ def update_daily_btc_portfolio_balance(start_date, end_date):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=True, host='0.0.0.0')
