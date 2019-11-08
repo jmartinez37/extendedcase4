@@ -364,7 +364,7 @@ def update_table(exchange, leverage, start_date, end_date):
         dash.dependencies.Input("date-range-select", "end_date"),
     ),
 )
-def update_daily_btc_portfolio_balance(start_date, end_date):
+def update_daily_btc_portfolio_balance(exchange, leverage, start_date, end_date):
     dfd = filter_df(exchange, leverage, start_date, end_date)
     trace_btc = go.Scatter(x=dfd["Entry time"], y=dfd["BTC Price"])
     trace_portfolio = go.Scatter(x=dfd["Entry time"], y=dfd["Profit"])
