@@ -12,10 +12,10 @@ from sqlalchemy import create_engine, text
 #df = pd.read_csv("aggr.csv", parse_dates=["Entry time"])
 
 #From database
-POSTGRES_ADDRESS = 'projectmedellin.ccwkaz2hd3k8.us-east-2.rds.amazonaws.com' ## INSERT YOUR DB ADDRESS
+POSTGRES_ADDRESS = 'extendedcase.cfpfawymlkb6.us-east-2.rds.amazonaws.com' ## INSERT YOUR DB ADDRESS
 POSTGRES_PORT = '5432'
 POSTGRES_USERNAME = 'postgres' ## CHANGE THIS TO YOUR POSTGRES USERNAME
-POSTGRES_PASSWORD = 'oTuyoRw6p4lYKikB7NNp' ## CHANGE THIS TO YOUR POSTGRES PASSWORD 
+POSTGRES_PASSWORD = 'laclavedejulio' ## CHANGE THIS TO YOUR POSTGRES PASSWORD 
 POSTGRES_DBNAME = 'strategy' ## CHANGE THIS TO YOUR DATABASE NAME
 postgres_str = ('postgresql://{username}:{password}@{ipaddress}:{port}/{dbname}'
                 .format(username=POSTGRES_USERNAME,
